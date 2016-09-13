@@ -61,7 +61,7 @@ module RGeo
 
 
             def test_version
-              assert_not_nil(::ActiveRecord::ConnectionAdapters::Mysql2SpatialAdapter::VERSION)
+              refute_nil(::ActiveRecord::ConnectionAdapters::Mysql2SpatialAdapter::VERSION)
             end
 
 
