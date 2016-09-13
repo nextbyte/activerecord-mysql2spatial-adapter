@@ -43,7 +43,7 @@ module ActiveRecord
         FACTORY_SETTINGS_CACHE = {}
 
         def initialize(factory_settings_, table_name_, name_, default_, cast_type_ = nil, sql_type_ = nil, null_ = true, collation_ = nil, extra_ = "")
-          super(name_, default_, sql_type_, null_, table_name_, nil, collation_, extra_)
+          super(name_, default_, sql_type_, null_, table_name_, nil, collation_)
           if type == :spatial
             @limit = { type: @geometric_type.type_name.underscore }
           end
