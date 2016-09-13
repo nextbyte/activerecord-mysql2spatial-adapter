@@ -83,13 +83,13 @@ module ActiveRecord
         end
 
 
-        def type_to_sql(type_, limit_=nil, precision_=nil, scale_=nil)
+        def type_to_sql(type_, limit_=nil, precision_=nil, scale_=nil, unsigned_ = nil)
           if (info_ = spatial_column_constructor(type_.to_sym))
             type_ = limit_[:type] || type_ if limit_.is_a?(::Hash)
             type_ = 'geometry' if type_.to_s == 'spatial'
             type_ = type_.to_s.gsub('_', '').upcase
           end
-          super(type_, limit_, precision_, scale_)
+          super(type_, limit_, precision_, scale_, unsigned_)
         end
 
 
@@ -110,8 +110,15 @@ module ActiveRecord
           result_ = @connection.query "SHOW FULL FIELDS FROM #{quote_table_name(table_name_)}"
           columns_ = []
           result_.each(:symbolize_keys => true, :as => :hash) do |field_|
+            type_metadata = fetch_type_metadata(field_[:Type], field_[:Extra])
+            if type_metadata.type == :datetime && field_[:Default] == "CURRENT_TIMESTAMP"
+              default, default_function = nil, field_[:Default]
+            else
+              default, default_function = field_[:Default], nil
+            end
+            # new_column(field[:Field], default, type_metadata, field[:Null] == "YES", table_name, default_function, field[:Collation], comment: field[:Comment].presence)
             columns_ << SpatialColumn.new(@rgeo_factory_settings, table_name_.to_s,
-              field_[:Field], field_[:Default], lookup_cast_type(field_[:Type]), field_[:Type], field_[:Null] == "YES", field_[:Collation], field_[:Extra])
+                                          field_[:Field], field_[:Default], type_metadata, type_metadata, field_[:Null] == "YES", field_[:Collation], field_[:Comment].presence)
           end
           columns_
         end

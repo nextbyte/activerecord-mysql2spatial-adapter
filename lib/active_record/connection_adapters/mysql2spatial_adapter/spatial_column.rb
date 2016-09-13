@@ -38,7 +38,7 @@
 module ActiveRecord
   module ConnectionAdapters
     module Mysql2SpatialAdapter
-      class SpatialColumn < ConnectionAdapters::Mysql2Adapter::Column
+      class SpatialColumn < ConnectionAdapters::MySQL::Column
 
         FACTORY_SETTINGS_CACHE = {}
 

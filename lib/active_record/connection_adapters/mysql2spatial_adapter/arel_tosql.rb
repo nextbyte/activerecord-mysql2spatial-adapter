@@ -65,7 +65,7 @@ module Arel
 
     end
 
-    VISITORS['mysql2spatial'] = ::Arel::Visitors::MySQL2Spatial
+#    VISITORS['mysql2spatial'] = ::Arel::Visitors::MySQL2Spatial
 
   end
 end
