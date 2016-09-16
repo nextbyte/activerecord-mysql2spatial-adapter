@@ -118,7 +118,7 @@ module ActiveRecord
             end
             # new_column(field[:Field], default, type_metadata, field[:Null] == "YES", table_name, default_function, field[:Collation], comment: field[:Comment].presence)
             columns_ << SpatialColumn.new(@rgeo_factory_settings, table_name_.to_s,
-                                          field_[:Field], field_[:Default], type_metadata, type_metadata, field_[:Null] == "YES", field_[:Collation], field_[:Comment].presence)
+                                          field_[:Field], field_[:Default], lookup_cast_type(field_[:Type]), type_metadata, field_[:Null] == "YES", field_[:Collation], field_[:Comment].presence)
           end
           columns_
         end
