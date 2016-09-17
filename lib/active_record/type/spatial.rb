@@ -26,9 +26,8 @@ module ActiveRecord
             geo_type: 'point',
             has_m:    false,
             has_z:    false,
-            sql_type: 'point',
-            srid:     srid,
-            sql_type: 'geography'
+            sql_type: 'geography',
+            srid:     srid
           )
       end
 
